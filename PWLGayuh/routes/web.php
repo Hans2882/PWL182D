@@ -52,3 +52,8 @@ Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
 Route::get('/articles/{id}', function ($postId) {
     return 'Halaman artikel dengan ID ' .$postId;
 });
+
+//Optional Parameters
+Route::get('/user/{name?}', function ($name = 'John') {
+    return 'Nama saya ' . $name;
+});
