@@ -68,3 +68,17 @@ Route::get('/hello', [WelcomeController::class, 'hello']);
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/about', [AboutController::class, 'about']);
 Route::get('/articles/{id}', [ArticleController::class, 'articles']);
+
+//Resource Controller
+Route::resource('photos', ArticleController::class);
+
+Route::resource('photos', PhotoController::class)->only([
+    'index',
+    'show'
+]);
+Route::resource('photos', PhotoController::class)->except([
+    'create',
+    'store',
+    'update',
+    'destroy'
+]);
