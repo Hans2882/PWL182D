@@ -23,22 +23,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 // Basic Routing
-Route::get('/hello', function () {
-    return 'hello world';
-});
+// Route::get('/hello', function () {
+//     return 'hello world';
+// });
 
 Route::get('/world', function () {
     return 'World';
 });
 
-Route::get('/', function () {
-    return 'Selamat Datang';
-});
+// Route::get('/', function () {
+//     return 'Selamat Datang';
+// });
 
-Route::get('/about', function () {
-    return "Nim : 2341720181
-Nama : Nakita Gayuh Cakrawala";
-});
+// Route::get('/about', function () {
+//     return "Nim : 2341720181
+// Nama : Nakita Gayuh Cakrawala";
+// });
 
 // Route Parameter
 Route::get('/user/{name}', function ($name) {
@@ -49,11 +49,22 @@ Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
     return 'Pos ke-' . $postId . " Komentar ke-: " . $commentId;
 });
 
-Route::get('/articles/{id}', function ($postId) {
-    return 'Halaman artikel dengan ID ' .$postId;
-});
+// Route::get('/articles/{id}', function ($postId) {
+//     return 'Halaman artikel dengan ID ' .$postId;
+// });
 
 //Optional Parameters
 Route::get('/user/{name?}', function ($name = 'John') {
     return 'Nama saya ' . $name;
 });
+
+//Controller
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+// Route::get('/', [PageController::class, 'index']);
+// Route::get('/about', [PageController::class, 'about']);
+// Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+Route::get('/', [HomeController::class, 'home']);
+Route::get('/about', [AboutController::class, 'about']);
+Route::get('/articles/{id}', [ArticleController::class, 'articles']);
