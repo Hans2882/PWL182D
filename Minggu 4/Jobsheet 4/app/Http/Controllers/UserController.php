@@ -65,6 +65,13 @@ class UserController extends Controller
         /*$user = UserModel::where('username', 'manager9')->firstOrFail();
         return view('user', ['data' => $user]);*/ // Praktikum 2.2 no 3
         
+        /*$user = UserModel::where('level_id', 2)->count();
+        dd($user);
+        return view('user', ['data' => $user]);*/ // Praktikum 2.3 no 1
+
+        /*$user = UserModel::where('level_id', 2)->count();
+        return view('user', ['user' => $user]);*/ // Praktikum 2.3 no 3
+
         // coba akses model UserModel
         /*$user = UserModel::all(); //ambil semua data dari tabel m_user
         return view('user', ['data' => $user]);*/
