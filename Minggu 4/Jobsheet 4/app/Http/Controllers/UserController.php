@@ -59,6 +59,12 @@ class UserController extends Controller
         });
         return view('user', ['data' => $user]);*/ //Praktikum 2.1 no 10
 
+        /*$user = UserModel::findOrfail(1);
+        return view('user', ['data' => $user]);*/ // Praktikum 2.2 no 1
+
+        /*$user = UserModel::where('username', 'manager9')->firstOrFail();
+        return view('user', ['data' => $user]);*/ // Praktikum 2.2 no 3
+        
         // coba akses model UserModel
         /*$user = UserModel::all(); //ambil semua data dari tabel m_user
         return view('user', ['data' => $user]);*/
