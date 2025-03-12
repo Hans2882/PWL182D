@@ -64,13 +64,53 @@ class UserController extends Controller
 
         /*$user = UserModel::where('username', 'manager9')->firstOrFail();
         return view('user', ['data' => $user]);*/ // Praktikum 2.2 no 3
-        
+
         /*$user = UserModel::where('level_id', 2)->count();
         dd($user);
         return view('user', ['data' => $user]);*/ // Praktikum 2.3 no 1
 
         /*$user = UserModel::where('level_id', 2)->count();
         return view('user', ['user' => $user]);*/ // Praktikum 2.3 no 3
+
+        // $user = UserModel::firstOrCreate(
+        //     [
+        //         'username' => 'manager',
+        //         'nama' => 'manager'
+        //     ],
+        //     );
+        // return view ('user', ['data' => $user]); //Praktikum 2.4 no 1
+
+        // $user = UserModel::firstOrCreate(
+        //     [
+        //         'username' => 'manager22',
+        //         'nama' => 'manager Dua Dua',
+        //         'password' => Hash::make('12345'),
+        //         'level_id' => 2
+        //     ],
+        // );
+        // return view('user', ['data' => $user]); // Praktikum 2.4 no 4
+
+        // $user = UserModel::firstOrNew(
+        //     [
+        //         'username' => 'manager',
+        //         'nama' => 'manager'
+        //     ]
+        // );
+        // return view('user', ['data' => $user]); //Praktikum 2.4 no 6
+
+        $user = UserModel::firstOrNew(
+            [
+                'username' => 'manager33',
+                'nama'  => 'Manager Tiga Tiga',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
+        $user->save(); // Praktikum 2.4 no 10
+
+        return view('user', ['data' => $user]); // Praktikum 2.4 no 8
+
+
 
         // coba akses model UserModel
         /*$user = UserModel::all(); //ambil semua data dari tabel m_user
