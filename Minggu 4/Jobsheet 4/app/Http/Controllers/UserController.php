@@ -98,22 +98,61 @@ class UserController extends Controller
         // );
         // return view('user', ['data' => $user]); //Praktikum 2.4 no 6
 
-        $user = UserModel::firstOrNew(
-            [
-                'username' => 'manager33',
-                'nama'  => 'Manager Tiga Tiga',
-                'password' => Hash::make('12345'),
-                'level_id' => 2
-            ],
-        );
-        $user->save(); // Praktikum 2.4 no 10
+        // $user = UserModel::firstOrNew(
+        //     [
+        //         'username' => 'manager33',
+        //         'nama'  => 'Manager Tiga Tiga',
+        //         'password' => Hash::make('12345'),
+        //         'level_id' => 2
+        //     ],
+        // );
+        // $user->save(); // Praktikum 2.4 no 10
 
-        return view('user', ['data' => $user]); // Praktikum 2.4 no 8
+        //return view('user', ['data' => $user]); // Praktikum 2.4 no 8
 
+        // $user = UserModel::create([
+        //     'username' => 'manager55',
+        //     'nama' => 'Manager55',
+        //     'password' => Hash::make('12345'),
+        //     'level_id' => 2
+        // ]);
+        // $user->username = 'manager56';
 
+        // $user->isDirty(); //True
+        // $user->isDirty('username'); //True
+        // $user->isDirty('nama'); //False
+        // $user->isDirty('nama', 'username'); //True
+
+        // $user->isClean(); //False
+        // $user->isClean('username'); //False
+        // $user->isClean('nama'); //True
+        // $user->isClean('nama', 'username'); //False
+
+        // $user->save();   
+
+        // $user->isDirty(); //False
+        // $user->isClean(); //True
+        // dd($user->isDirty()); // Praktikum 2.5 no 1
+
+        $user = UserModel::create([
+            'username' => 'manager11',
+            'nama' => 'Manager11',
+            'password' => Hash::make('12345'),
+            'level_id' => 2
+        ]);
+        $user->username = 'manager12';
+        $user->save();
+
+        $user->wasChanged(); //True
+        $user->wasChanged('username'); //True
+        $user->wasChanged(['username', 'level_id']); //true
+        $user->wasChanged('nama'); //False
+        $user->wasChanged('nama', 'username'); //True
+        dd($user->wasChanged(['nama', 'username'])); //True
+        // Praktikum 2.5 no 3
 
         // coba akses model UserModel
-        /*$user = UserModel::all(); //ambil semua data dari tabel m_user
-        return view('user', ['data' => $user]);*/
+        // $user = UserModel::all(); //ambil semua data dari tabel m_user
+        // return view('user', ['data' => $user]);
     }
 }
