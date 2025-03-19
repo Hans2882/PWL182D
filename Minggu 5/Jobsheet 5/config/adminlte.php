@@ -309,7 +309,12 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
+        [
+            'text' => 'Manage kategori',
+            'url' => 'kategori',
+            'icon' => 'fas fa-list',
+        ],
+        
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
