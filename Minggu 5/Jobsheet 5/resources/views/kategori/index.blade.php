@@ -11,6 +11,7 @@
         <a href="{{ url('/kategori/create') }}" class="btn btn-primary">Add Kategori</a>
     </div>
 @endsection
+
 @section('content')
     <div class="container">
         <div class="card">
