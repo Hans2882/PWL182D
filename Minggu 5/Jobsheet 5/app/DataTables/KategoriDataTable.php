@@ -29,6 +29,9 @@ class KategoriDataTable extends DataTable
                     <a href="' . url('/kategori/' . $kategori->Kategori_id . '/edit') . '" class="btn btn-sm btn-warning">
                         <i class="fas fa-edit"></i> Edit
                     </a>
+                    <a class="btn btn-sm btn-danger delete-btn mt-1" href="' . url('/kategori_delete/' . $kategori->Kategori_id . '') . '">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
                 ';
             })
             ->rawColumns(['action']);
