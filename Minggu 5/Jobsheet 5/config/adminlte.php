@@ -311,6 +311,7 @@ return [
         ],
         [
             'text' => 'Manage kategori',
+            'topnav' => true,
             'url' => 'kategori',
             'icon' => 'fas fa-list',
         ],
