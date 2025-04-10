@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login Pengguna</title>
+    <title>Registrasi Pengguna</title>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -29,19 +29,44 @@
                 <a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ url('login') }}" method="POST" id="form-login">
+                <p class="login-box-msg">Daftar akun baru</p>
+                <form action="{{ url('register') }}" method="POST" id="form-register">
                     @csrf
+                    <div class="input-group mb-3">
+                        <select name="level_id" class="form-control" required>
+                            <option value="">-- Pilih Level --</option>
+                            @foreach ($levels as $level)
+                                <option value="{{ $level->level_id }}">{{ $level->level_nama }}</option>
+                            @endforeach
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-tag"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="input-group mb-3">
                         <input type="text" id="username" name="username" class="form-control"
                             placeholder="Username">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
                         <small id="error-username" class="error-text text-danger"></small>
                     </div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-id-card"></span>
+                            </div>
+                        </div>
+                        <small id="error-nama" class="error-text text-danger"></small>
+                    </div>
+
                     <div class="input-group mb-3">
                         <input type="password" id="password" name="password" class="form-control"
                             placeholder="Password">
@@ -52,19 +77,26 @@
                         </div>
                         <small id="error-password" class="error-text text-danger"></small>
                     </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">Remember Me</label>
+
+                    <div class="input-group mb-3">
+                        <input type="password" name="password_confirmation" class="form-control"
+                            placeholder="Konfirmasi Password" required minlength="6">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success btn-block">Daftar</button>
                         </div>
                     </div>
                 </form>
-                <a href="{{ route('register') }}" class="text-center">Buat Akun</a>
+                <p class="mt-3 mb-1 text-center">
+                    <a href="{{ url('login') }}">Sudah punya akun? Login di sini</a>
+                </p>
             </div>
         </div>
     </div>
@@ -85,17 +117,30 @@
         });
 
         $(document).ready(function() {
-            $("#form-login").validate({
+            $("#form-register").validate({
                 rules: {
+                    level_id: {
+                        required: true
+                    },
                     username: {
                         required: true,
                         minlength: 4,
                         maxlength: 20
                     },
+                    nama: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
+                    },
                     password: {
                         required: true,
-                        minlength: 5,
+                        minlength: 6,
                         maxlength: 20
+                    },
+                    password_confirmation: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#password"
                     }
                 },
                 submitHandler: function(form) {
@@ -107,8 +152,8 @@
                             if (response.status) {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
+                                    title: 'Registrasi Berhasil',
+                                    text: response.message
                                 }).then(function() {
                                     window.location = response.redirect;
                                 });
@@ -128,7 +173,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: 'Gagal terhubung ke server.'
+                                text: 'Gagal mengirim ke server.'
                             });
                         }
                     });
@@ -149,4 +194,5 @@
         });
     </script>
 </body>
+
 </html>

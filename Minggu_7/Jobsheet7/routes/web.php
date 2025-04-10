@@ -19,6 +19,9 @@ Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'postregister']);
+
 Route::middleware(['auth'])->group(function () { // artinya semua route di dalam group harus login dulu
     // masukkan semua route yang perlu di autentikasi di sini 
 
@@ -98,7 +101,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
     // artinya semua route di grup ini harus punya role admin dan manager
     // Route::group(['prefix' => 'barang'], function () {
-    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+    Route::middleware(['authorize:ADM,MNG,STF,CUS'])->group(function () {
         Route::get('/barang', [BarangController::class, 'index']);
         Route::post('/barang/list', [BarangController::class, 'list']);
         Route::get('/barang/create', [BarangController::class, 'create']);
