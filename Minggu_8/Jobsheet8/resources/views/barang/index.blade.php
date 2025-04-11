@@ -3,56 +3,61 @@
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">{{ $page->title }}</h3>
+            <h3 class="card-title">Daftar Barang</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('barang/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Ajax</button>
+
+                <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
+
+                <a href="{{ url('/barang/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
-        <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
 
-            <!-- Filter Berdasarkan Kategori -->
+        <!-- Untuk Filter Data -->
+        <div id="filter" class="form-horizontal filter-date p-2 border-bottom mb-2">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Filter:</label>
-                        <div class="col-3">
-                            <select class="form-control" id="Kategori_id" name="Kategori_id">
+                    <div class="form-group form-group-sm row text-sm mb-0">
+                        <label for="filter_kategori" class="col-md-1 col-form-label">Filter</label>
+                        <div class="col-md-3">
+                            <select name="filter_kategori" class="form-control filter_kategori">
                                 <option value="">- Semua -</option>
-                                @foreach ($kategori as $kat)
-                                    <option value="{{ $kat->Kategori_id }}">{{ $kat->kategori_nama }}</option>
+                                @foreach ($kategori as $l)
+                                    <option value="{{ $l->Kategori_id }}">{{ $l->kategori_nama }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Filter berdasarkan kategori</small>
+                            <small class="form-text text-muted">Kategori Barang</small>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_barang">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Barang</th>
-                        <th>Nama Barang</th>
-                        <th>Kategori</th>
-                        <th>Harga Jual</th>
-                        <th>Harga Beli</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-            </table>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        <table class="table table-bordered table-sm table-striped table-hover" id="table-barang">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Harga Beli</th>
+                    <th>Harga Jual</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
-    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog"
-        databackdrop="static"data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+    </div>
+
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" data-backdrop="static" data-keyboard="false"
+        data-width="75%"></div>
 @endsection
 
 @push('js')
@@ -65,7 +70,7 @@
 
         var dataUser;
         $(document).ready(function() {
-            dataUser = $('#table_barang').DataTable({
+            dataUser = $('#table-barang').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -74,45 +79,64 @@
                     dataType: "json",
                     // Kirim Kategori_id sebagai parameter untuk filter
                     data: function(d) {
-                        d.Kategori_id = $('#Kategori_id').val();
+                        d.Kategori_id = $('.filter_Kategori').val();
                     }
                 },
                 columns: [{
-                        data: "barang_id",
+                        data: "DT_RowIndex",
                         className: "text-center",
-                        orderable: true
-                    },
-                    {
-                        data: "barang_kode",
-                        orderable: true
-                    },
-                    {
-                        data: "barang_nama",
-                        orderable: true
-                    },
-                    {
-                        data: "kategori.kategori_nama",
+                        width: "5%",
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: "harga_jual",
-                        orderable: true
+                        data: "barang_kode",
+                        className: "",
+                        width: "10%"
+                    },
+                    {
+                        data: "barang_nama",
+                        className: "",
+                        width: "25%"
                     },
                     {
                         data: "harga_beli",
-                        orderable: true
+                        className: "",
+                        width: "10%",
+                        render: function(data) {
+                            return new Intl.NumberFormat('id-ID').format(data);
+                        }
+                    },
+                    {
+                        data: "harga_jual",
+                        className: "",
+                        width: "10%",
+                        render: function(data) {
+                            return new Intl.NumberFormat('id-ID').format(data);
+                        }
+                    },
+                    {
+                        data: "kategori.kategori_nama",
+                        className: "",
+                        width: "15%"
                     },
                     {
                         data: "aksi",
+                        className: "text-center",
+                        width: "15%",
                         orderable: false,
                         searchable: false
                     }
                 ]
             });
-            // Saat filter berubah, reload DataTables
-            $('#Kategori_id').on('change', function() {
-                dataUser.ajax.reload();
+            $('#table-barang_filter input').unbind().bind('keyup', function(e) {
+                if (e.keyCode == 13) {
+                    datUser.search(this.value).draw();
+                }
+            });
+
+            $('.filter_kategori').change(function() {
+                datUser.draw();
             });
         });
     </script>
