@@ -5,9 +5,9 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('/user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Ajax</button>
+                <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-info">Import Level</button>
+
+                <a href="{{ url('/user/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
         <div class="card-body">
@@ -37,7 +37,7 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Username</th>
                         <th>Nama</th>
                         <th>Level Pengguna</th>
@@ -76,35 +76,38 @@
                     }
                 },
                 columns: [{
-                    // nomor urut dari laravel datatable addIndexColumn()
-                    data: "user_id",
-                    className: "text-center",
-                    orderable: true,
-                    searchable: false
-                }, {
-                    data: "username",
-                    className: "",
-                    // orderable: true, jika ingin kolom ini bisa diurutkan 
-                    orderable: true,
-                    // searchable: true, jika ingin kolom ini bisa dicari
-                    searchable: true
-                }, {
-                    data: "nama",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    // mengambil data level hasil dari ORM berelasi
-                    data: "level.level_nama",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "aksi",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }]
+                        // nomor urut dari laravel datatable addIndexColumn()
+                        data: "DT_RowIndex",
+                        className: "text-center",
+                        width: "5%",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "username",
+                        className: "",
+                        // orderable: true, jika ingin kolom ini bisa diurutkan 
+                        orderable: true,
+                        // searchable: true, jika ingin kolom ini bisa dicari
+                        searchable: true
+                    }, {
+                        data: "nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    }, {
+                        // mengambil data level hasil dari ORM berelasi
+                        data: "level.level_nama",
+                        className: "",
+                        orderable: false,
+                        searchable: false
+                    }, {
+                        data: "aksi",
+                        className: "",
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
             $('#level_id').on('change', function() {
                 dataUser.ajax.reload();

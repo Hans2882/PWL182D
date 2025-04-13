@@ -5,9 +5,9 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('/supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Ajax</button>
+                <button onclick="modalAction('{{ url('/supplier/import') }}')" class="btn btn-info">Import Level</button>
+
+                <a href="{{ url('/supplier/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Kode Supplier</th>
                         <th>Nama Supplier</th>
                         <th>Alamat Supplier</th>
@@ -54,9 +54,11 @@
                     dataType: "json"
                 },
                 columns: [{
-                        data: "supplier_id",
+                        data: "DT_RowIndex",
                         className: "text-center",
-                        orderable: true
+                        width: "5%",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: "supplier_kode",

@@ -6,6 +6,7 @@ use App\Models\SupplierModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -149,7 +150,68 @@ class SupplierController extends Controller
 
         return redirect('/');
     }
+    public function import()
+    {
+        return view('supplier.import');
+    }
 
+    public function import_supplier_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_supplier' => ['required', 'mimes:xlsx', 'max:1024']
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+
+            $file = $request->file('file_supplier');
+
+            $reader = IOFactory::createReader('Xlsx');
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $data = $sheet->toArray(null, false, true, true);
+
+            $insert = [];
+
+            if (count($data) > 1) {
+                foreach ($data as $index => $row) {
+                    if ($index > 1) {
+                        $insert[] = [
+                            'supplier_kode' => $row['A'],
+                            'supplier_nama' => $row['B'],
+                            'supplier_alamat' => $row['C'],
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+
+                if (count($insert) > 0) {
+                    SupplierModel::insertOrIgnore($insert);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data supplier berhasil diimport'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data yang bisa diimport'
+                ]);
+            }
+        }
+
+        return redirect('/');
+    }
 
     // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)

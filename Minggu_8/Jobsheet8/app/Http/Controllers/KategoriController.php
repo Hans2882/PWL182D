@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
 
 class KategoriController extends Controller
@@ -147,6 +148,68 @@ class KategoriController extends Controller
         return redirect('/');
     }
 
+    public function import()
+    {
+        return view('kategori.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_kategori' => ['required', 'mimes:xlsx', 'max:1024']
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+
+            $file = $request->file('file_kategori');
+
+            $reader = IOFactory::createReader('Xlsx');
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $data = $sheet->toArray(null, false, true, true);
+
+            $insert = [];
+
+            if (count($data) > 1) {
+                foreach ($data as $index => $row) {
+                    if ($index > 1) { // Baris pertama adalah header
+                        $insert[] = [
+                            'kategori_kode' => $row['A'],
+                            'kategori_nama' => $row['B'],
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+
+                if (count($insert) > 0) {
+                    KategoriModel::insertOrIgnore($insert);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data kategori berhasil diimport'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data yang bisa diimport'
+                ]);
+            }
+        }
+
+        return redirect('/');
+    }
+
     // Ambil data user dalam bentuk json untuk datatables
     public function list(Request $request)
     {
@@ -161,12 +224,16 @@ class KategoriController extends Controller
                 // csrf_field() . method_field('DELETE') .
                 // '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
 
-                $btn = '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
-                    '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
-                    '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
-                    '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                // $btn = '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
+                //     '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                // $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
+                //     '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                // $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id .
+                //     '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+
+                $btn = '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->Kategori_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])

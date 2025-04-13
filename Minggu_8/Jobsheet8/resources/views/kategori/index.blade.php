@@ -3,32 +3,34 @@
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">{{ $page->title }}</h3>
+            <h3 class="card-title">Daftar Kategori</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('/kategori/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Ajax</button>
+
+                <button onclick="modalAction('{{ url('/kategori/import') }}')" class="btn btn-info">Import Kategori</button>
+
+                <a href="{{ url('/kategori/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
-        <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
+    </div>
+    <div class="card-body">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
 
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Kategori</th>
-                        <th>Nama Kategori</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+        <table class="table table-bordered table-striped table-hover table-sm" id="table-kategori">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode Kategori</th>
+                    <th>Nama Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
     </div>
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog"
         databackdrop="static"data-keyboard="false" data-width="75%" aria-hidden="true"></div>
@@ -47,7 +49,7 @@
 
         var dataUser;
         $(document).ready(function() {
-            dataUser = $('#table_kategori').DataTable({
+            dataUser = $('#table-kategori').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -56,10 +58,17 @@
                     dataType: "json"
                 },
                 columns: [{
-                        data: "Kategori_id",
+                        data: "DT_RowIndex",
                         className: "text-center",
-                        orderable: true
+                        width: "5%",
+                        orderable: false,
+                        searchable: false
                     },
+                    // {
+                    //     data: "Kategori_id",
+                    //     className: "text-center",
+                    //     orderable: true
+                    // },
                     {
                         data: "kategori_kode",
                         orderable: true
