@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
             Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [UserController::class, 'export_excel']);// export excel
         });
     });
 
@@ -68,6 +69,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::delete('/level/{id}', [LevelController::class, 'destroy']);
         Route::get('/level/import', [LevelController::class, 'import']); // ajax form upload excel
         Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
+        Route::get('/level/export_excel', [LevelController::class, 'export_excel']);// export excel
     });
     Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::group(['prefix' => 'kategori'], function () {
@@ -87,6 +89,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::delete('/{id}', [KategoriController::class, 'destroy']);
             Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [KategoriController::class, 'export_excel']);// export excel
         });
     });
     Route::middleware(['authorize:ADM,MNG'])->group(function () {
@@ -107,6 +110,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::delete('/{id}', [SupplierController::class, 'destroy']);
             Route::get('/import', [SupplierController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [SupplierController::class, 'export_excel']);// export excel
         });
     });
     // artinya semua route di grup ini harus punya role admin dan manager

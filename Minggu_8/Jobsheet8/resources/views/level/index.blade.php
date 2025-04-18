@@ -7,6 +7,9 @@
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/level/import') }}')" class="btn btn-info">Import Level</button>
 
+                <a href="{{ url('/level/export_excel') }}" class="btn btn-primary"><i class="fa fa-fileexcel"></i>
+                    Export Level</a>
+
                 <a href="{{ url('/level/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
