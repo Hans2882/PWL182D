@@ -68,9 +68,9 @@
             });
         }
 
-        var dataUser;
+        var datUser;
         $(document).ready(function() {
-            dataUser = $('#table-barang').DataTable({
+            datUser = $('#table-barang').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
