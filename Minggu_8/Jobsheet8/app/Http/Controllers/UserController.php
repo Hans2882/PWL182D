@@ -149,7 +149,7 @@ class UserController extends Controller
         return view('user.import');
     }
 
-    public function import_user_ajax(Request $request)
+    public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
@@ -183,6 +183,7 @@ class UserController extends Controller
                             'level_id' => $row['A'],
                             'username' => $row['B'],
                             'nama' => $row['C'],
+                            'password' => bcrypt($row['D']),
                             'created_at' => now(),
                         ];
                     }

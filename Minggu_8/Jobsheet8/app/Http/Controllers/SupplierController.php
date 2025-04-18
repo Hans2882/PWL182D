@@ -155,7 +155,7 @@ class SupplierController extends Controller
         return view('supplier.import');
     }
 
-    public function import_supplier_ajax(Request $request)
+    public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [

@@ -146,7 +146,7 @@ class LevelController extends Controller
         return view('level.import');
     }
 
-    public function import_level_ajax(Request $request)
+    public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
