@@ -10,6 +10,9 @@
                 <a href="{{ url('/user/export_excel') }}" class="btn btn-primary"><i class="fa fa-fileexcel"></i>
                     Export User</a>
 
+                <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning"><i class="fa fa-filepdf"></i>
+                    Export User PDF</a>
+
                 <a href="{{ url('/user/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>

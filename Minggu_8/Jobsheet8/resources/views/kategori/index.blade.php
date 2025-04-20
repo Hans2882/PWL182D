@@ -11,6 +11,9 @@
                 <a href="{{ url('/kategori/export_excel') }}" class="btn btn-primary"><i class="fa fa-fileexcel"></i>
                     Export Kategori</a>
 
+                <a href="{{ url('/kategori/export_pdf') }}" class="btn btn-warning"><i class="fa fa-filepdf"></i>
+                    Export Kategori PDF</a>
+
                 <a href="{{ url('/kategori/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>

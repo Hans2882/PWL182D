@@ -10,6 +10,9 @@
                 <a href="{{ url('/level/export_excel') }}" class="btn btn-primary"><i class="fa fa-fileexcel"></i>
                     Export Level</a>
 
+                <a href="{{ url('/level/export_pdf') }}" class="btn btn-warning"><i class="fa fa-filepdf"></i>
+                    Export Level PDF</a>
+
                 <a href="{{ url('/level/create') }}" class="btn btn-primary">Tambah Data (Ajax)</a>
             </div>
         </div>
