@@ -13,6 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Carbon;
 
 class PenjualanController extends Controller
 {
@@ -60,10 +61,14 @@ class PenjualanController extends Controller
             ->join('t_stok', 'm_barang.barang_id', '=', 't_stok.barang_id')
             ->where('t_stok.stok_jumlah', '>', 0)
             ->select('m_barang.*', 't_stok.stok_jumlah')
-            ->get(); // cuma barang yang ada stoknya yang ditampilin
+            ->get();
 
         $user = Auth::user(); // ambil user yang login
-        $kode = 'PJ-' .  PenjualanModel::orderBy('penjualan_id', 'desc')->value('penjualan_id') + 1;
+
+        $tanggal = Carbon::now('Asia/Jakarta')->format('Ymd');
+
+        $jumlahHariIni = PenjualanModel::whereDate('tanggal_penjualan', Carbon::today())->count();
+        $kode = $tanggal . '-' . ($jumlahHariIni + 1);
 
         return view('penjualan.create_ajax')
             ->with('barang', $barang)
@@ -145,7 +150,6 @@ class PenjualanController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Data Penjualan dan Detail berhasil disimpan',
-                    'struk_url' => url('/penjualan/struk/' . $penjualan->penjualan_id)
                 ]);
             } catch (\Exception $e) {
                 DB::rollback();
@@ -267,11 +271,5 @@ class PenjualanController extends Controller
         $pdf->render();
 
         return $pdf->stream('Data Penjualan ' . date('Y-m-d H:i:s') . '.pdf');
-    }
-
-    public function struk($id)
-    {
-        $penjualan = PenjualanModel::with(['detail.barang', 'user'])->findOrFail($id);
-        return view('penjualan.struk', compact('penjualan'));
     }
 }

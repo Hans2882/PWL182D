@@ -48,14 +48,14 @@
 
                         @foreach ($penjualan->detail as $d)
                             @php
-                                $subtotal = $d->harga * $d->jumlah;
+                                $subtotal = $d->harga_barang * $d->jumlah_barang;
                                 $total += $subtotal;
                             @endphp
                             <tr>
                                 <td>{{ $d->detail_id }}</td>
                                 <td>{{ $d->barang->barang_nama }}</td>
-                                <td>Rp.{{ number_format($d->harga, 0, ',', '.') }}</td>
-                                <td>{{ $d->jumlah }}</td>
+                                <td>Rp.{{ number_format($d->harga_barang, 0, ',', '.') }}</td>
+                                <td>{{ $d->jumlah_barang }}</td>
                                 <td>Rp.{{ number_format($subtotal, 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
