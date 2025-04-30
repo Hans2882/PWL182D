@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']); // mengimpan perubahan data user ajax
             Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // Untuk tampilan confirm delete user ajax
             Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // untuk hapus data user ajax
+            Route::get('/{id}/show_ajax', [UserController::class, 'show_ajax']);
             Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
             Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/level/{id}/update_ajax', [LevelController::class, 'update_ajax']); // mengimpan perubahan data user ajax
         Route::get('/level/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilan confirm delete user ajax
         Route::delete('/level/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // untuk hapus data user ajax 
+        Route::get('/level/{id}/show_ajax', [LevelController::class, 'show_ajax']);
         Route::delete('/level/{id}', [LevelController::class, 'destroy']);
         Route::get('/level/import', [LevelController::class, 'import']); // ajax form upload excel
         Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
@@ -96,6 +98,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::put('/{id}/update_ajax', [KategoriController::class, 'update_ajax']); // mengimpan perubahan data user ajax
             Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); // Untuk tampilan confirm delete user ajax
             Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // untuk hapus data user ajax 
+            Route::get('/{id}/show_ajax', [KategoriController::class, 'show_ajax']);
             Route::delete('/{id}', [KategoriController::class, 'destroy']);
             Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
@@ -118,6 +121,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // mengimpan perubahan data user ajax
             Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // Untuk tampilan confirm delete user ajax
             Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // untuk hapus data user ajax 
+            Route::get('/{id}/show_ajax', [SupplierController::class, 'show_ajax']);
             Route::delete('/{id}', [SupplierController::class, 'destroy']);
             Route::get('/import', [SupplierController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
@@ -141,6 +145,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']); // mengimpan perubahan data user ajax
         Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilan confirm delete user ajax
         Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // untuk hapus data user ajax 
+        Route::get('/barang/{id}/show_ajax', [BarangController::class, 'show_ajax']);
         Route::get('/barang/import', [BarangController::class, 'import']); // ajax form upload excel
         Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
         Route::get('/barang/export_excel', [BarangController::class, 'export_excel']); // export excel

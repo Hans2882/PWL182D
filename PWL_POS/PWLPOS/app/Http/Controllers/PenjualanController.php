@@ -103,7 +103,7 @@ class PenjualanController extends Controller
 
             try {
                 DB::beginTransaction();
-
+               
                 // Simpan ke t_penjualan
                 $penjualan = PenjualanModel::create([
                     'user_id' => $request->user_id,
@@ -117,8 +117,8 @@ class PenjualanController extends Controller
                     PenjualanDetailModel::create([
                         'penjualan_id' => $penjualan->penjualan_id,
                         'barang_id' => $barang_id,
-                        'harga' => $request->harga[$i],
-                        'jumlah' => $request->jumlah[$i],
+                        'harga_barang' => $request->harga[$i],
+                        'jumlah_barang' => $request->jumlah[$i],
                     ]);
 
                     // kurangi stok

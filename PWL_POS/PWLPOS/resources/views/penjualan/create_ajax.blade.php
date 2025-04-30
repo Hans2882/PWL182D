@@ -37,7 +37,7 @@
                     <label>Tanggal</label>
                     <input type="datetime-local" name="tanggal_penjualan" id="tanggal_penjualan" class="form-control"
                         required>
-                    <small id="error-penjualan-tanggal" class="error-text form-text text-danger"></small>
+                    <small id="error-tanggal-penjualan" class="error-text form-text text-danger"></small>
                 </div>
                 <hr>
                 <h6>Detail Barang</h6>

@@ -30,52 +30,66 @@
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="nav-header">Data Pengguna</li>
-            <li class="nav-item">
-                <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-layer-group"></i>
-                    <p>Level User</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('/user') }}" class="nav-link {{ $activeMenu == 'user' ? 'active' : '' }}">
-                    <i class="nav-icon far fa-user"></i>
-                    <p>Data User</p>
-                </a>
-            </li>
+            @if ((Auth::check() && Auth::user()->level_id == 1) || Auth::user()->level_id == 2)
+                <li class="nav-header">Data Pengguna</li>
+                <li class="nav-item">
+                    <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>Level User</p>
+                    </a>
+                </li>
+                @if (Auth::check() && Auth::user()->level_id == 1)
+                    <li class="nav-item">
+                        <a href="{{ url('/user') }}" class="nav-link {{ $activeMenu == 'user' ? 'active' : '' }}">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>Data User</p>
+                        </a>
+                    </li>
+                @endif
+            @endif
             <li class="nav-header">Data Barang</li>
-            <li class="nav-item">
-                <a href="{{ url('/kategori') }}" class="nav-link {{ $activeMenu == 'kategori' ? 'active' : '' }} ">
-                    <i class="nav-icon far fa-bookmark"></i>
-                    <p>Kategori Barang</p>
-                </a>
-            </li>
+            @if ((Auth::check() && Auth::user()->level_id == 1) || Auth::user()->level_id == 2)
+                <li class="nav-item">
+                    <a href="{{ url('/kategori') }}" class="nav-link {{ $activeMenu == 'kategori' ? 'active' : '' }} ">
+                        <i class="nav-icon far fa-bookmark"></i>
+                        <p>Kategori Barang</p>
+                    </a>
+                </li>
+            @endif
             <li class="nav-item">
                 <a href="{{ url('/barang') }}" class="nav-link {{ $activeMenu == 'barang' ? 'active' : '' }} ">
                     <i class="nav-icon far fa-list-alt"></i>
                     <p>Data Barang</p>
                 </a>
             </li>
-            <li class="nav-header">Data Supplier</li>
-            <li class="nav-item">
-                <a href="{{ url('/supplier') }}" class="nav-link {{ $activeMenu == 'supplier' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-shipping-fast"></i>
-                    <p>Supplier</p>
-                </a>
-            </li>
+            @if ((Auth::check() && Auth::user()->level_id == 1) || Auth::user()->level_id == 2)
+                <li class="nav-header">Data Supplier</li>
+                <li class="nav-item">
+                    <a href="{{ url('/supplier') }}"
+                        class="nav-link {{ $activeMenu == 'supplier' ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-shipping-fast"></i>
+                        <p>Supplier</p>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::check() && Auth::user()->level_id == 1 || Auth::user()->level_id == 2 || Auth::user()->level_id == 3)
             <li class="nav-header">Data Transaksi</li>
-            <li class="nav-item">
-                <a href="{{ url('/stok') }}" class="nav-link {{ $activeMenu == 'stok' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-cubes"></i>
-                    <p>Stok Barang</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('/penjualan') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-cash-register"></i>
-                    <p>Transaksi Penjualan</p>
-                </a>
-            </li>
+                @if (Auth::check() && Auth::user()->level_id == 1 || Auth::user()->level_id == 2)
+                    <li class="nav-item">
+                        <a href="{{ url('/stok') }}" class="nav-link {{ $activeMenu == 'stok' ? 'active' : '' }} ">
+                            <i class="nav-icon fas fa-cubes"></i>
+                            <p>Stok Barang</p>
+                        </a>
+                    </li>
+                @endif
+                <li class="nav-item">
+                    <a href="{{ url('/penjualan') }}"
+                        class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-cash-register"></i>
+                        <p>Transaksi Penjualan</p>
+                    </a>
+                </li>
+            @endif
             <li class="nav-header">Logout</li>
             <li class="nav-item">
                 <a href="#" class="nav-link"

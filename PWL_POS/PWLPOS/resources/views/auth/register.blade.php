@@ -32,7 +32,7 @@
                 <p class="login-box-msg">Daftar akun baru</p>
                 <form action="{{ url('register') }}" method="POST" id="form-register">
                     @csrf
-                    <div class="input-group mb-3">
+                    {{-- <div class="input-group mb-3">
                         <select name="level_id" class="form-control" required>
                             <option value="">-- Pilih Level --</option>
                             @foreach ($levels as $level)
@@ -44,7 +44,7 @@
                                 <span class="fas fa-user-tag"></span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="input-group mb-3">
                         <input type="text" id="username" name="username" class="form-control"

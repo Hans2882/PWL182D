@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label>Jumlah</label>
-                        <input value="{{ $stok->stok_jumlah }}" type="text" name="stok_jumlah" id="stok_jumlah"
+                        <input value="{{ $stok->stok_jumlah }}" type="number" name="stok_jumlah" id="stok_jumlah"
                             class="form-control" required>
                         <small id="error-stok-jumlah" class="error-text form-text text-danger"></small>
                     </div>

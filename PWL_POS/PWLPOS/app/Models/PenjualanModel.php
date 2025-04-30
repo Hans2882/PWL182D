@@ -15,7 +15,7 @@ class PenjualanModel extends Model
         'user_id',
         'pembeli',
         'penjualan_kode',
-        'penjualan_tanggal'
+        'tanggal_penjualan'
     ];
 
     public function user()
